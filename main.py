@@ -1,9 +1,13 @@
 from tkinter import *
 from tkinter import messagebox
 import os
+from random import choice, randint, shuffle
+import pyperclip
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-
+LETTERS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+NUMBERS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+SYMBOLS = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 IMAGE = "/data/logo.png"
 dir_path = os.path.dirname(os.path.abspath(__file__)) # get the path of the current file
 
@@ -11,7 +15,16 @@ def generate_password():
     """
     generate a random password
     """
-    pass
+    password_letters = [choice(LETTERS) for _ in range(randint(8, 10))] # generate a random password of 8 to 10 letters
+    password_symbols = [choice(SYMBOLS) for _ in range(randint(2, 4))] # generate a random password of 2 to 4 symbols
+    password_numbers = [choice(NUMBERS) for _ in range(randint(2, 4))] # generate a random password of 2 to 4 numbers
+
+    password_list = password_letters + password_symbols + password_numbers # combine the lists
+    shuffle(password_list) # shuffle the list
+
+    password = "".join(password_list) # convert the list to a string
+    input_password.insert(0, password) # insert the password into the text box
+    pyperclip.copy(password) # copy the password to the clipboard
 def add():
     """
     save a new credential to the file
