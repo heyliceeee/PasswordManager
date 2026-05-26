@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 import os
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
@@ -15,12 +16,22 @@ def add():
     """
     save a new credential to the file
     """
-    with open(dir_path + "/data/credentials.txt", "a") as file:
-        file.write(f"{input_website.get()} | {input_email_username.get()} | {input_password.get()}\n")
+    website = input_website.get()
+    email_username = input_email_username.get()
+    password = input_password.get()
 
-    # clear the text box
-    input_website.delete(0, END)
-    input_password.delete(0, END)
+    if len(website) == 0 or len(password) == 0: # if you have an empty website or password, display a warming message
+        messagebox.showinfo("Empty field", "Please make sure you don't have any empty fields.")
+    else:
+        is_ok = messagebox.askokcancel(website, f"There are the details entered: \nEmail/Username: {email_username}\nPassword: {password}\nIs it ok to save?") # show a message box
+
+        if is_ok:
+            with open(dir_path + "/data/credentials.txt", "a") as file:
+                file.write(f"{website} | {email_username} | {password}\n")
+
+            # clear the text box
+            input_website.delete(0, END)
+            input_password.delete(0, END)
 
 # UI setup
 def create_window():
