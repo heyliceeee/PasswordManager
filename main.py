@@ -13,10 +13,14 @@ def generate_password():
     pass
 def add():
     """
-    add a new password
+    save a new credential to the file
     """
-    pass
+    with open(dir_path + "/data/credentials.txt", "a") as file:
+        file.write(f"{input_website.get()} | {input_email_username.get()} | {input_password.get()}\n")
 
+    # clear the text box
+    input_website.delete(0, END)
+    input_password.delete(0, END)
 
 # UI setup
 def create_window():
@@ -62,7 +66,11 @@ def create_textbox():
     create a text box, set the text, and place it on the screen
     """
     input_website.grid(column=1, row=1, columnspan=2)
+    input_website.focus() # set the focus to the text box
+
     input_email_username.grid(column=1, row=2, columnspan=2)
+    input_email_username.insert(0, "alice@mail.com")
+
     input_password.grid(column=1, row=3)
 
 window = Tk() # create a window
