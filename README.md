@@ -1,26 +1,34 @@
-# 🗝️ Password Manager
+# Password Manager
 
-Aplicação simples e intuitiva para gestão de palavras‑passe, permitindo gerar credenciais seguras e armazená‑las localmente de forma organizada.
+Aplicação desktop desenvolvida em Python com Tkinter para gerir palavras‑passe de forma simples e rápida. Permite gerar *strong passwords*, guardar credenciais localmente e pesquisar entradas existentes.
 
-## ✨ Funcionalidades Principais
+## ✨ Funcionalidades
 
-- **Geração automática** de palavras‑passe fortes com combinação aleatória de letras, números e símbolos.  
-- **Cópia imediata** da palavra‑passe para o clipboard para uso rápido.  
-- **Armazenamento local** de credenciais num ficheiro dedicado.  
-- **Interface gráfica** simples, com campos para website, email/username e palavra‑passe.  
-- **Confirmação de segurança** antes de guardar novas entradas.  
+- **Geração de passwords** com letras, números e símbolos  
+- **Cópia automática** da password para o clipboard  
+- **Armazenamento local** de credenciais num ficheiro JSON  
+- **Pesquisa rápida** por website e email/username  
+- **Pop‑ups de validação** para avisos e confirmações  
+- Interface gráfica simples construída com Tkinter
 
-## 🧩 Estrutura da Aplicação
+## 📁 Estrutura dos dados
 
-- Área para introdução de website e email/username.  
-- Campo dedicado à palavra‑passe, com opção para gerar automaticamente.  
-- Botão para guardar credenciais após confirmação.  
-- Logótipo exibido no topo da interface.  
+As credenciais são guardadas num ficheiro JSON dentro da pasta `data/`, organizadas por website, contendo email/username e password associados.
 
-## 🔐 Objetivo
+## 🖥️ Interface
 
-Facilitar a criação e organização de palavras‑passe fortes, reduzindo o risco de reutilização de credenciais fracas e simplificando o processo de gestão pessoal de acessos.
+A interface inclui:
+- Campos para website, email/username e password  
+- Botões para gerar password, adicionar credenciais e pesquisar  
+- Logótipo exibido através de um canvas Tkinter
 
-## 📁 Armazenamento
+## 🚀 Como funciona
 
-As credenciais são guardadas num ficheiro local num formato simples e legível, permitindo consulta futura.
+1. O utilizador introduz o website e email/username.  
+2. Pode gerar uma *strong password* automaticamente.  
+3. Ao guardar, os dados são confirmados via pop‑up e armazenados no ficheiro JSON.  
+4. A pesquisa verifica se existe uma entrada correspondente e mostra os dados num pop‑up.
+
+## 🔒 Nota
+
+As credenciais são guardadas **localmente**. Não existe qualquer envio de dados para serviços externos.
