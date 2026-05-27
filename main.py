@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from tkinter import *
 from tkinter import messagebox
 import os
@@ -46,16 +47,22 @@ def add():
         is_ok = messagebox.askokcancel(website, f"There are the details entered: \nEmail/Username: {email_username}\nPassword: {password}\nIs it ok to save?") # show a message box
 
         if is_ok: # if the user clicks ok, save the credential to the file
-            with open(dir_path + "/data/credentials.json", "r") as file: # open the file
-                data = json.load(file) # load the data from the file
-            data.update(new_data) # update the data with the new data
+            try:
+                with open(dir_path + "/data/credentials.json", "r") as file: # read the file
+                    data = json.load(file) # load the data from the file
 
-            with open(dir_path + "/data/credentials.json", "w") as file: # open the file
-                json.dump(data, file, indent=4) # save the new_data to the file
+            except FileNotFoundError:
+                with open(dir_path + "/data/credentials.json", "w") as file: # write the file
+                    json.dump(new_data, file, indent=4) # save the new_data to the file
 
-            # clear the text box
-            input_website.delete(0, END)
-            input_password.delete(0, END)
+            else: # if the file already exists
+                data.update(new_data) # update the data with the new data
+                with open(dir_path + "/data/credentials.json", "w") as file: # write the file
+                    json.dump(data, file, indent=4) # save the new_data to the file
+
+            finally: # always clear the text box
+                input_website.delete(0, END)
+                input_password.delete(0, END)
 
 # UI setup
 def create_window():
