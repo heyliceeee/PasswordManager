@@ -63,6 +63,29 @@ def add():
             finally: # always clear the text box
                 input_website.delete(0, END)
                 input_password.delete(0, END)
+def find_password():
+    """
+    check if there exists a credential for that website, if there does, display the email/username and password
+    """
+    website = input_website.get().lower()
+    email_username = input_email_username.get()
+
+    if len(website) == 0 or len(email_username) == 0: # if you have an empty website or password
+        messagebox.showinfo("Empty field", "Please make sure you don't have any empty fields.")
+    else:
+        try:
+            with open(dir_path + "/data/credentials.json", "r") as file: # read the file
+                data = json.load(file) # load the data from the file
+
+        except FileNotFoundError:
+            messagebox.showinfo(title="No Data File Found", message="Please make sure you have any credential created.")  # show a message box
+
+        else:
+            if website in data and email_username in data[website]["email/username"]:  # if there exists a credential
+                messagebox.showinfo(title=website, message=f"Email/Username: {data[website]["email/username"]}\nPassword: {data[website]["password"]}") # show a message box
+
+            else:
+                messagebox.showinfo(title="No Credential", message="There is no credential for that website.")  # show a message box
 
 # UI setup
 def create_window():
@@ -103,11 +126,14 @@ def create_btns():
 
     add_btn = Button(width=36, text="Add", command=add, highlightthickness=0) # create the button
     add_btn.grid(column=1, row=4, columnspan=2) # place the button on the window
+
+    search_btn = Button(text="Search", command=find_password, highlightthickness=0, width=13) # create the button
+    search_btn.grid(column=2, row=1) # place the button on the window
 def create_textbox():
     """
     create a text box, set the text, and place it on the screen
     """
-    input_website.grid(column=1, row=1, columnspan=2)
+    input_website.grid(column=1, row=1)
     input_website.focus() # set the focus to the text box
 
     input_email_username.grid(column=1, row=2, columnspan=2)
@@ -122,7 +148,7 @@ create_labels() # call the function to create the labels
 create_canvas() # call the function to create the canvas
 create_btns() # call the function to create the buttons
 
-input_website = Entry(width=38) # create a text box
+input_website = Entry(width=21) # create a text box
 input_email_username = Entry(width=38) # create a text box
 input_password = Entry(width=21) # create a text box
 create_textbox() # call the function to create the textbox
