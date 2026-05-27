@@ -46,8 +46,12 @@ def add():
         is_ok = messagebox.askokcancel(website, f"There are the details entered: \nEmail/Username: {email_username}\nPassword: {password}\nIs it ok to save?") # show a message box
 
         if is_ok: # if the user clicks ok, save the credential to the file
+            with open(dir_path + "/data/credentials.json", "r") as file: # open the file
+                data = json.load(file) # load the data from the file
+            data.update(new_data) # update the data with the new data
+
             with open(dir_path + "/data/credentials.json", "w") as file: # open the file
-                json.dump(new_data, file, indent=4) # save the data to the file
+                json.dump(data, file, indent=4) # save the new_data to the file
 
             # clear the text box
             input_website.delete(0, END)
