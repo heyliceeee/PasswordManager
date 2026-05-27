@@ -1,3 +1,4 @@
+import json
 from tkinter import *
 from tkinter import messagebox
 import os
@@ -32,15 +33,21 @@ def add():
     website = input_website.get()
     email_username = input_email_username.get()
     password = input_password.get()
+    new_data = {
+        website: {
+            "email/username": email_username,
+            "password": password
+        }
+    }
 
     if len(website) == 0 or len(password) == 0: # if you have an empty website or password, display a warming message
-        messagebox.showinfo("Empty field", "Please make sure you don't have any empty fields.")
+        messagebox.showinfo("Empty field", "Please make sure you don't have any empty fields.") # show a message box
     else:
         is_ok = messagebox.askokcancel(website, f"There are the details entered: \nEmail/Username: {email_username}\nPassword: {password}\nIs it ok to save?") # show a message box
 
-        if is_ok:
-            with open(dir_path + "/data/credentials.txt", "a") as file:
-                file.write(f"{website} | {email_username} | {password}\n")
+        if is_ok: # if the user clicks ok, save the credential to the file
+            with open(dir_path + "/data/credentials.json", "w") as file: # open the file
+                json.dump(new_data, file, indent=4) # save the data to the file
 
             # clear the text box
             input_website.delete(0, END)
